@@ -19,8 +19,7 @@ enum Direction
   TOP,
   BOTTOM,
   LEFT,
-  RIGHT,
-  END
+  RIGHT
 };
 
 void dump_image(Direction direction);
@@ -28,5 +27,6 @@ void dump_image(Direction direction);
 bool save_png( const string &name, GLbyte* pixels, GLint w, GLint h );
 
 extern Mesh* mesh;
+extern string image_path;
 
 #endif //TEST_IMAGE_H

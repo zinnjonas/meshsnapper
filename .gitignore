@@ -29,3 +29,6 @@
 
 # Test meshes
 *.off
+
+#ignore binary output
+bin/

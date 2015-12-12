@@ -8,6 +8,7 @@
 using namespace std;
 using namespace Magick;
 
+string image_path;
 bool info = false;
 bool grab = false;
 bool novis = false;
@@ -19,7 +20,7 @@ void usage( const string& name )
 {
   cout << "usage " << name << " [flags] mesh" << endl;
   cout << "\tflags: " << endl;
-  cout << "\t\t-grab" << "\tgrabs images of all 6 directions and store them with mesh name" << endl;
+  cout << "\t\t-grab [path]" << "\tgrabs images of all 6 directions and store them with mesh name in either the working dir or given on" << endl;
   cout << "\t\t-info" << "\tprints some infos about the mesh" << endl;
   cout << "\t\t-novis" << "\texit after loading" << endl;
   cout << "\tmesh:\ta mesh in as off" << endl;
@@ -33,7 +34,7 @@ void set_camera( Direction direction )
   glLightfv( GL_LIGHT2, GL_SPOT_DIRECTION, new float[4]{0.f, 0.f, 1.f, 0.f} );
   switch ( direction )
   {
-
+    default:
     case FRONT:
       gluLookAt( 0.f, 0.f, 3.f,
                  0.f, 0.f, 0.f,
@@ -68,9 +69,6 @@ void set_camera( Direction direction )
       gluLookAt( 3.f, 0.f, 0.f,
                  0.f, 0.f, 0.f,
                  0.f, 1.f, 0.f );
-      break;
-    case END:
-    default:
       break;
   }
   glLightfv( GL_LIGHT0, GL_POSITION, new float[4]{-3.f, 1.f, 0.f, 1.0f} );
@@ -111,9 +109,12 @@ void display()
   if ( grab )
   {
     dump_image( direction );
-    direction = Direction( direction + 1 );
-    if ( direction == END )
+    if ( direction == RIGHT )
       exit( 0 );
+    else if ( direction == LEFT )
+      direction = BACK;
+    else
+      direction = Direction( direction + 2 );
   }
 }
 
@@ -142,7 +143,21 @@ int main( int argc, char** argv )
     if ( !strcmp( argv[i], "-info" ))
       info = true;
     else if ( !strcmp( argv[i], "-grab" ))
+    {
       grab = true;
+      if ( i + 1 != argc - 1 )
+      {
+        if ( argv[i + 1][0] != '-' )
+        {
+          i++;
+          image_path = argv[i];
+        }
+        else
+        {
+          image_path = "";
+        }
+      }
+    }
     else if ( !strcmp( argv[i], "-novis" ))
       novis = true;
     else
@@ -164,8 +179,8 @@ int main( int argc, char** argv )
   if ( novis )
     exit( 0 );
 
-  if( grab)
-    InitializeMagick(*argv);
+  if ( grab )
+    InitializeMagick( *argv );
 
   // GLUT environment init
   glutInit( &argc, argv );
@@ -176,7 +191,7 @@ int main( int argc, char** argv )
   glutCreateWindow( argv[0] );
 
   glutDisplayFunc( display );
-  glutIdleFunc(repaint);
+  glutIdleFunc( repaint );
 
   glEnable( GL_DEPTH_TEST );
   glShadeModel( GL_SMOOTH );

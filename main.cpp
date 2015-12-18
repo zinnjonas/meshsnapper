@@ -48,15 +48,15 @@ void set_camera( Direction direction )
       break;
 
     case TOP:
-      gluLookAt( 0.f, 3.f, 0.f,
-                 0.f, 0.f, 0.f,
-                 0.f, 0.f, -1.f );
-      break;
-
-    case BOTTOM:
       gluLookAt( 0.f, -3.f, 0.f,
                  0.f, 0.f, 0.f,
                  0.f, 0.f, 1.f );
+      break;
+
+    case BOTTOM:
+      gluLookAt( 0.f, 3.f, 0.f,
+                 0.f, 0.f, 0.f,
+                 0.f, 0.f, -1.f );
       break;
 
     case LEFT:
@@ -154,7 +154,7 @@ int main( int argc, char** argv )
         }
         else
         {
-          image_path = "";
+          image_path = ".";
         }
       }
     }

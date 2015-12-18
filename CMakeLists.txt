@@ -3,6 +3,8 @@ project(meshsnapper)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+#set(CMAKE_VERBOSE_MAKEFILE on)
+
 set(SOURCE_FILES main.cpp image.h image.cpp mesh.cpp mesh.h)
 add_executable(meshsnapper ${SOURCE_FILES})
 
@@ -24,8 +26,11 @@ target_link_libraries(meshsnapper ${OpenGL_LIBRARY})
 find_package(ImageMagick COMPONENTS Magick++ montage MagickCore convert)
 
 if( ImageMagick_FOUND)
-    include_directories(${ImageMagick_Magick++_INCLUDE_DIR})
+    include_directories(${ImageMagick_Magick++_INCLUDE_DIRS})
+    include_directories(${ImageMagick_INCLUDE_DIRS})
+    target_link_libraries(meshsnapper ${ImageMagick_convert_LIBRARIES})
     target_link_libraries(meshsnapper ${ImageMagick_montage_LIBRARIES})
+    target_link_libraries(meshsnapper ${MAGICK++_LIBRARIES})
     target_link_libraries(meshsnapper ${ImageMagick_LIBRARIES})
     add_definitions(-DIMAGE_MAGICK=1)
     add_definitions(-DPNG_LIB=0)

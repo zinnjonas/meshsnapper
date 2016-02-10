@@ -59,7 +59,9 @@ int main(int argc, const char* argv[])
   };
 
   Direction direction = FRONT;
-  Display* dpy = XOpenDisplay(0);
+  char env[] = "DISPLAY=:0.0";
+  putenv( env );
+  Display* dpy = XOpenDisplay( nullptr);
   int fbcount = 0;
   GLXFBConfig* fbc = nullptr;
   GLXContext ctx;
@@ -179,9 +181,6 @@ int main(int argc, const char* argv[])
 
   glLightf( GL_LIGHT2, GL_SPOT_CUTOFF, 15 );
   glLightf( GL_LIGHT2, GL_SPOT_EXPONENT, 100 );
-
-  /* try it out */
-  printf("vendor: %s\n", (const char*)glGetString(GL_VENDOR));
 
   mesh = new Mesh();
   if( mesh->load(argv[argc - 1]))

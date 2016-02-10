@@ -15,7 +15,6 @@ void get_line( ifstream& file, string& line )
     getline( file, line );
     if ( line.empty() || line.at( 0 ) == '#' || (line.find('\r') != string::npos && line.length() < 3))
     {
-      cout << "empty" << endl;
       line.clear();
       continue;
     }

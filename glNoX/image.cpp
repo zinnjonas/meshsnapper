@@ -55,7 +55,7 @@ void dump_image( Direction direction )
     m.backgroundColor("black");
     m.geometry("300x300+2+2");
     m.tile("3x2");
-    m.fileName(mesh->get_name()+".png");
+    m.fileName(image_path + "/" + mesh->get_name()+".png");
     list<Image> mImages;
 
     montageImages(&mImages, images.begin(), images.end(), m);

@@ -57,9 +57,9 @@ bool Mesh::load( const char* name )
 {
 
   // Set the color of the object
-  m_ambient[0] = m_specular[0] = m_diffuse[0] = 0.4f;
-  m_ambient[1] = m_specular[1] = m_diffuse[1] = 0.4f;
-  m_ambient[2] = m_specular[2] = m_diffuse[2] = 0.4f;
+  m_ambient[0] = m_specular[0] = m_diffuse[0] = 0.8f;
+  m_ambient[1] = m_specular[1] = m_diffuse[1] = 0.8f;
+  m_ambient[2] = m_specular[2] = m_diffuse[2] = 0.8f;
   m_shining = 50.0f;
 
   if ( strchr( name, '/' ) == nullptr )
